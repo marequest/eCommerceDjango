@@ -3,6 +3,7 @@
 <header class="section-header">
 <nav class="navbar p-md-0 navbar-expand-sm navbar-light border-bottom">
 <div class="container">
+
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTop4" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -73,7 +74,7 @@
                     <div class="widget-header">
 						<small class="title text-muted">Welcome {{ user.first_name }}!</small>
 						<div>
-							<a href="#">Dashboard</a> <span class="dark-transp"> | </span>
+							<a href="{% url 'dashboard' %}">Dashboard</a> <span class="dark-transp"> | </span>
 							<a href="{% url 'logout' %}"> Logout</a>
 						</div>
 					</div>
