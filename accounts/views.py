@@ -1,4 +1,4 @@
-
+import requests
 from django.contrib import messages, auth
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.tokens import default_token_generator
@@ -12,6 +12,8 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 
 from accounts.forms import RegistrationForm
 from accounts.models import Account
+from carts.models import Cart, CartItem
+from carts.views import _cart_id
 
 
 def register(request):
@@ -26,7 +28,8 @@ def register(request):
 
             username = email.split('@')[0]
 
-            user = Account.objects.create_user(first_name=first_name, last_name=last_name, email=email, username=username, password=password)
+            user = Account.objects.create_user(first_name=first_name, last_name=last_name, email=email,
+                                               username=username, password=password)
             user.phone_number = phone_number
             user.save()
 
@@ -59,9 +62,57 @@ def login(request):
 
         user = auth.authenticate(email=email, password=password)
         if user is not None:
+            try:
+                cart = Cart.objects.get(cart_id=_cart_id(request))
+                is_cart_item_exists = CartItem.objects.filter(cart=cart).exists()
+                if is_cart_item_exists:
+
+                    # Getting the product variations by cart id
+                    cart_items = CartItem.objects.filter(cart=cart)
+                    product_variation = []
+                    for cart_item in cart_items:
+                        variation = cart_item.variations.all()
+                        product_variation.append(list(variation))
+
+                    # Get the cart items from the user to access his product variation
+                    cart_item = CartItem.objects.filter(user=user)
+                    ex_var_list = []
+                    id = []
+                    for item in cart_item:
+                        existing_variation = item.variations.all()
+                        ex_var_list.append(list(existing_variation))
+                        id.append(item.id)
+
+                    # product_variation = [1, 2, 4], We are finding common variations
+                    # ex_var_list = [4, 6, 1]
+                    for pr in product_variation:
+                        if pr in ex_var_list:
+                            index = ex_var_list.index(pr)
+                            item_id = id[index]
+                            item = CartItem.objects.get(id=item_id)
+                            item.quantity += 1
+                            item.user = user
+                            item.save()
+                        else:
+                            cart_items = CartItem.objects.filter(cart=cart)
+                            for item in cart_items:
+                                item.user = user
+                                item.save()
+            except:
+                pass
             auth.login(request, user)
             messages.success(request, 'You are now logged in!')
-            return redirect('dashboard')
+            url = request.META['HTTP_REFERER']
+            try:
+                query = requests.utils.urlparse(url).query
+                # print(f'query = {query}') #query = next=/cart/checkout/
+                params = dict(x.split('=') for x in query.split('&'))
+                # print(f'params = {params}') #params = {'next': '/cart/checkout/'}
+                if 'next' in params:
+                    nextPage = params['next']
+                    return redirect(nextPage)
+            except:
+                return redirect('dashboard')
         else:
             messages.error(request, 'Invalid email or password.')
             return redirect('login')
