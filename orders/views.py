@@ -1,13 +1,16 @@
 import json
 from datetime import datetime
+from django.core.mail import EmailMessage
 
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
+from django.template.loader import render_to_string
 from django.views.decorators.csrf import csrf_exempt
 
 from carts.models import CartItem
 from orders.forms import OrderForm
 from orders.models import Order, Payment, OrderProduct
+from store.models import Product
 
 
 # Create your views here.
@@ -70,9 +73,8 @@ def place_order(request, quantity=0, total=0):
 @csrf_exempt
 def payments(request):
     body = json.loads(request.body)
-    print("AAAAAAAAAAAAAAAAA")
-    print(body)
-    order = Order.objects.get(user=request.user, order_number=body['orderID'], is_ordered=False)
+
+    order = Order.objects.get(user=request.user, is_ordered=False, order_number=body['orderID'])
 
     payment = Payment(
         user=request.user,
@@ -101,13 +103,72 @@ def payments(request):
         order_product.is_ordered = True
         # order_product.variation
         order_product.save()
-    # Reduce the qunatity of the sold products
+
+        cart_item = CartItem.objects.get(id=cart_item.id)
+        product_variations = cart_item.variations.all()
+        order_product = OrderProduct.objects.get(id=order_product.id)
+        order_product.variations.set(product_variations)
+        order_product.save()
+
+        # Reduce the qunatity of the sold products
+        product = Product.objects.get(id=cart_item.product_id)
+        if (product.stock - cart_item.quantity >= 0):
+            product.stock -= cart_item.quantity
+        else:
+            return HttpResponse('Not enough in stock')
+        product.save()
 
     # Clear cart
+    CartItem.objects.filter(user=request.user).delete()
 
     # Send email to customer
+    mail_subject = 'Thank you for shopping with us.'
+    message = render_to_string('orders/order_received_email.html', {
+        'user': request.user,
+        'order': order,
+    })
+    to_email = request.user.email
+    send_email = EmailMessage(mail_subject, message, to=[to_email])
+    send_email.send()
 
     # Send order number and transaction id back to onApprove
+    data = {
+        'order_number': order.order_number,
+        'transaction_id': payment.payment_id,
+        # 'order_date': order.created_at,
+        # 'status': order.status,
+    }
+    return JsonResponse(data)
+    # return render(request, 'orders/payments.html')
 
 
-    return render(request, 'orders/payments.html')
+@csrf_exempt
+def order_complete(request):
+    order_number = request.GET.get('order_number')
+    payment_id = request.GET.get('payment_id')
+
+    try:
+        order = Order.objects.get(order_number=order_number, is_ordered=True)
+        ordered_products = OrderProduct.objects.filter(order_id=order.id)
+
+        subtotal = 0
+        for i in ordered_products:
+            subtotal += i.product_price * i.quantity
+
+        payment = Payment.objects.get(payment_id=payment_id)
+
+        context = {
+            'order': order,
+            'ordered_products': ordered_products,
+            'order_number': order.order_number,
+            'payment_id': payment.payment_id,
+            'payment': payment,
+            'subtotal': subtotal,
+        }
+        return render(request, 'orders/order_complete.html', context)
+    except(Payment.DoesNotExist, Order.DoesNotExist) as e:
+        print("GRESKA")
+        print(e)
+        # return redirect('home')
+        return render(request, 'orders/order_complete.html')
+

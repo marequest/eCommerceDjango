@@ -1,0 +1,13 @@
+{% autoescape off %}
+
+    Hi {{ user.first_name }},
+    
+    Thank you for ordering from Jovicic.
+    
+    YOUR ORDER HAS BEEN RECEIVED and will be shipped out in 2-4 days.
+    
+    Order Number: {{ order.order_number }}
+    
+    If you think it's not you, ingore this email.
+
+{% endautoescape %}
