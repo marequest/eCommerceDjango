@@ -73,6 +73,9 @@ def product_details(request, category_slug=None, product_slug=None):
 
 
 def search(request):
+    products = Product.objects.all().filter(is_available=True).order_by('id')
+    product_count = products.count()
+
     if 'keyword' in request.GET:
         keyword = request.GET['keyword']
         if keyword:
