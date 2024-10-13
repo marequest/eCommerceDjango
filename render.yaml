@@ -6,7 +6,7 @@ databases:
 
 services:
   - type: web
-    plan: free
+    plan: standard
     name: ecommerce
     runtime: python
     buildCommand: "./build.sh"
