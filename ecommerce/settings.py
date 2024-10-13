@@ -157,11 +157,20 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-# STATIC_URL = 'static/'
-# STATIC_ROOT = BASE_DIR / 'static'
+STATIC_URL = 'static/'
+# STATIC_ROOT = BASE_DIR / 'ecommerce/static'
 # STATICFILES_DIRS = [
 #     'ecommerce/static',
 # ]
+
+MEDIA_URL = 'media/'
+
+MEDIA_ROOT = BASE_DIR / 'media'
+
+
+# STATIC_URL = 'static/'
+
+STATICFILES_DIRS = [BASE_DIR / 'static']
 
 # if not DEBUG:
 #     # Tell Django to copy static assets into a path called `staticfiles` (this is specific to Render)
@@ -172,28 +181,30 @@ USE_TZ = True
 
 # media files configuration
 # MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
 
 # AWS settings
 AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID')  # Store in .env
 AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY')  # Store in .env
 AWS_STORAGE_BUCKET_NAME = 'ecommerce-marko-bucket'
-AWS_S3_REGION_NAME = 'us-east-2'  # e.g., 'us-east-1'
+# AWS_S3_REGION_NAME = 'us-east-2'  # e.g., 'us-east-1'
 AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
 AWS_S3_FILE_OVERWRITE = False
-AWS_DEFAULT_ACL = None  # To prevent permission issues
-AWS_S3_OBJECT_PARAMETERS = {
-    'CacheControl': 'max-age=86400',
-}
-STATIC_URL = f'https://{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com/static/'
+# AWS_DEFAULT_ACL = None  # To prevent permission issues
+# AWS_S3_OBJECT_PARAMETERS = {
+#     'CacheControl': 'max-age=86400',
+# }
 
-# Set static and media file URLs
-MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/'
 
-# Storage backend settings
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+# STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/static/'
 STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
+
+# Set static and media file URLs
+# MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/'
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+# MEDIA_ROOT = BASE_DIR / 'media'
 
 
 
