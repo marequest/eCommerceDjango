@@ -120,6 +120,9 @@ def login(request):
         else:
             messages.error(request, 'Invalid email or password.')
             return redirect('login')
+    else:
+        if request.user.is_authenticated:
+            return redirect('dashboard')
 
     return render(request, 'accounts/login.html')
 

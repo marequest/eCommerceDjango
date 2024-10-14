@@ -166,8 +166,8 @@ MEDIA_ROOT = BASE_DIR / 'media'
 # MEDIA_URL = '/media/'
 
 # AWS settings
-AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID')  # Store in .env
-AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY')  # Store in .env
+AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')  # Store in .env
+AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')  # Store in .env
 AWS_STORAGE_BUCKET_NAME = 'ecommerce-marko-bucket'
 # AWS_S3_REGION_NAME = 'us-east-2'  # e.g., 'us-east-1'
 AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
@@ -192,12 +192,12 @@ MESSAGE_TAGS = {
 }
 
 # SMTP configuration
-EMAIL_BACKEND = config('EMAIL_BACKEND')
-EMAIL_HOST = config('EMAIL_HOST')
-EMAIL_PORT = config('EMAIL_PORT', cast=int)
-EMAIL_HOST_USER = config('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
-EMAIL_USE_TLS = config('EMAIL_USE_TLS', default=True, cast=bool)
+EMAIL_BACKEND = os.environ.get('EMAIL_BACKEND')
+EMAIL_HOST = os.environ.get('EMAIL_HOST')
+EMAIL_PORT = os.environ.get('EMAIL_PORT')
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+EMAIL_USE_TLS = os.environ.get('EMAIL_USE_TLS')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
