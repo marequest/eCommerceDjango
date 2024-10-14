@@ -16,6 +16,8 @@ from carts.models import Cart, CartItem
 from carts.views import _cart_id
 from orders.models import Order, OrderProduct
 
+import traceback
+
 
 def register(request):
     if request.method == 'POST':
@@ -27,7 +29,12 @@ def register(request):
             phone_number = form.cleaned_data['phone_number']
             password = form.cleaned_data['password']
 
-            username = email.split('@')[0]
+            if email:
+                username = email.split('@')[0]
+            else:
+                # Handle the error if email is None
+                messages.error(request, 'Email is invalid or missing.')
+                return redirect('register')
 
             user = Account.objects.create_user(first_name=first_name, last_name=last_name, email=email,
                                                username=username, password=password)
@@ -36,8 +43,10 @@ def register(request):
 
             # USER ACTIVATION
             try:
-                current_site = get_current_site(request)
+                current_site = request.get_host()
+                # current_site = get_current_site(request)
                 mail_subject = 'Activate Your Account.'
+                messages.error(request, f'domains: {current_site}!')
                 message = render_to_string('accounts/account_verification_email.html', {
                     'user': user,
                     'domain': current_site,
@@ -48,7 +57,7 @@ def register(request):
                 send_email = EmailMessage(mail_subject, message, to=[to_email])
                 send_email.send()
             except Exception as e:
-                print(e)
+                print(traceback.format_exc())
 
             # messages.success(request, 'We have sent you a verification link to your email.')
             return redirect('/accounts/login/?command=verification&email=' + email)
