@@ -44,3 +44,41 @@ label:hover ~ input:checked ~ label /* highlight previous selected stars */ { co
 .rating-stars i{
     color: orange !important;
 }
+.color-selection {
+    display: flex;
+    gap: 10px;
+}
+
+.color-option {
+    position: relative;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.color-option input[type="radio"] {
+    display: none;
+}
+
+.color-box {
+    padding: 10px 20px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    background-color: #f0f0f0;
+    transition: border-color 0.3s, background-color 0.3s;
+}
+
+.color-option input[type="radio"]:checked + .color-box {
+    border-color: #007bff;
+    background-color: #e7f3ff;
+}
+
+.color-box:hover {
+    border-color: #007bff;
+}
+.btn span.glyphicon {
+	opacity: 0;
+}
+.btn.active span.glyphicon {
+	opacity: 1;
+}

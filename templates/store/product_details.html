@@ -12,14 +12,16 @@
                     <aside class="col-md-6">
                         <article class="gallery-wrap">
                             <div class="img-big-wrap main-image">
-                                <center><img src="{{ product.images.url }}"></center>
+                                <center><img src="{{ product.images.url }}" alt="Product Image"></center>
                             </div> <!-- img-big-wrap.// -->
                         </article> <!-- gallery-wrap .end// -->
                         <ul class="thumb">
                             <li>
-                                <a href="{{ product.images.url }}" target="main-image"><img src="{{ product.images.url }}" alt="Product Image"></a>
+                                <a href="{{ product.images.url }}" target="main-image"><img
+                                        src="{{ product.images.url }}" alt="Product Image"></a>
                                 {% for i in product_gallery %}
-                                <a href="{{ i.images.url }}" target="main-image"><img src="{{ i.images.url }}" alt="Product Image"></a>
+                                    <a href="{{ i.images.url }}" target="main-image"><img src="{{ i.images.url }}"
+                                                                                          alt="Product Image"></a>
                                 {% endfor %}
                             </li>
                         </ul>
@@ -62,28 +64,65 @@
 
 
                                 <hr>
+                                {#                                <div class="row">#}
+                                {#                                    <div class="item-option-select">#}
+                                {#                                        <h6>Choose Color</h6>#}
+                                {#                                        <select name="color" class="form-control" required>#}
+                                {#                                            <option value="" disabled selected>Select</option>#}
+                                {#                                            {% for i in product.variation_set.colors %}#}
+                                {#                                                <option value="{{ i.variation_value | lower }}">{{ i.variation_value }}</option>#}
+                                {#                                            {% endfor %}#}
+                                {#                                        </select>#}
+                                {#                                    </div>#}
+                                {#                                </div> <!-- row.// -->#}
                                 <div class="row">
                                     <div class="item-option-select">
                                         <h6>Choose Color</h6>
-                                        <select name="color" class="form-control" required>
-                                            <option value="" disabled selected>Select</option>
+                                    {% if product.variation_set.colors %}
+                                        <div class="color-selection">
                                             {% for i in product.variation_set.colors %}
-                                                <option value="{{ i.variation_value | lower }}">{{ i.variation_value }}</option>
+                                                <label class="color-option">
+                                                    <input type="radio" name="color"
+                                                           value="{{ i.variation_value | lower }}" required>
+                                                    <span class="color-box">{{ i.variation_value }}</span>
+                                                </label>
                                             {% endfor %}
-                                        </select>
+                                        </div>
+                                    {% else %}
+                                        <p style="color:red">No Colors Available</p>
+                                    {% endif %}
                                     </div>
                                 </div> <!-- row.// -->
+                                {#                                <div class="row">#}
+                                {#                                    <div class="item-option-select">#}
+                                {#                                        <h6>Select Size</h6>#}
+                                {#                                        <select name="size" class="form-control" required>#}
+                                {#                                            <option value="" disabled selected>Select</option>#}
+                                {#                                            {% for i in product.variation_set.sizes %}#}
+                                {#                                                <option value="{{ i.variation_value | lower }}">{{ i.variation_value | capfirst }}</option>#}
+                                {#                                            {% endfor %}#}
+                                {#                                        </select>#}
+                                {#                                    </div>#}
+                                {#                                </div> <!-- row.// -->#}
                                 <div class="row">
                                     <div class="item-option-select">
                                         <h6>Select Size</h6>
-                                        <select name="size" class="form-control" required>
-                                            <option value="" disabled selected>Select</option>
+                                        {% if product.variation_set.sizes %}
+                                        <div class="size-selection">
                                             {% for i in product.variation_set.sizes %}
-                                                <option value="{{ i.variation_value | lower }}">{{ i.variation_value | capfirst }}</option>
+                                                <label class="size-option">
+                                                    <input type="radio" name="size"
+                                                           value="{{ i.variation_value | lower }}" required>
+                                                    <span class="size-box">{{ i.variation_value | capfirst }}</span>
+                                                </label>
                                             {% endfor %}
-                                        </select>
+                                        </div>
+                                        {% else %}
+                                        <p style="color:red">No Sizes Available</p>
+                                    {% endif %}
                                     </div>
                                 </div> <!-- row.// -->
+
                                 <hr>
                                 {% if product.stock <= 0 %}
 

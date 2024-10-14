@@ -61,7 +61,7 @@
 }
 /* Click + hover color */
 input:checked ~ label, /* color current and previous stars on checked */
-label:hover, label:hover ~ label { color: orange;  } /* color previous stars on hover */
+label:hover, label:hover ~ label { color: gray;  } /* color previous stars on hover */
 
 /* Hover highlights */
 input:checked + label:hover, input:checked ~ label:hover, /* highlight current and previous stars */
@@ -70,4 +70,74 @@ label:hover ~ input:checked ~ label /* highlight previous selected stars */ { co
 
 .rating-stars i{
     color: orange !important;
+}
+.color-selection {
+    display: flex;
+    flex-wrap: wrap;  /* Allow wrapping if too many options */
+    gap: 10px;        /* Space between options */
+}
+
+.color-option {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+}
+
+.color-option input[type="radio"] {
+    display: none; /* Hide the default radio button */
+}
+
+.color-box {
+    padding: 5px 10px;
+    border: 2px solid #ccc;
+    border-radius: 2px;
+    background-color: #f0f0f0;
+    transition: border-color 0.3s, background-color 0.3s;
+    display: inline-block;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.color-option input[type="radio"]:checked + .color-box {
+    border-color: #007bff; /* Color change on select */
+    background-color: #e7f3ff; /* Light background when selected */
+}
+
+.color-box:hover {
+    border-color: #007bff; /* Hover effect */
+}
+.size-selection {
+    display: flex;
+    flex-wrap: wrap;  /* Allows wrapping to the next line if there are many options */
+    gap: 10px;        /* Space between size boxes */
+}
+
+.size-option {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+}
+
+.size-option input[type="radio"] {
+    display: none; /* Hide the default radio button */
+}
+
+.size-box {
+    padding: 5px 10px;
+    border: 2px solid #ccc;
+    border-radius: 2px;
+    background-color: #f0f0f0;
+    transition: border-color 0.3s, background-color 0.3s;
+    display: inline-block;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.size-option input[type="radio"]:checked + .size-box {
+    border-color: #007bff; /* Change border color on selection */
+    background-color: #e7f3ff; /* Light background when selected */
+}
+
+.size-box:hover {
+    border-color: #007bff; /* Hover effect to highlight selection */
 }
