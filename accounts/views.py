@@ -43,7 +43,7 @@ def register(request):
                 'uid': urlsafe_base64_encode(force_bytes(user.pk)),
                 'token': default_token_generator.make_token(user),
             })
-            to_email = email
+            to_email = user.email
             send_email = EmailMessage(mail_subject, message, to=[to_email])
             send_email.send()
 
@@ -150,7 +150,8 @@ def activate(request, uidb64, token):
 def dashboard(request):
     orders = Order.objects.order_by('-created_at').filter(user_id=request.user.id, is_ordered=True)
     orders_count = orders.count()
-    user_profile = UserProfile.objects.get(user_id=request.user.id)
+    user_profile, created = UserProfile.objects.get_or_create(user=request.user)
+
     context = {'orders': orders, 'orders_count': orders_count, 'user_profile': user_profile}
     return render(request, 'accounts/dashboard.html', context)
 
@@ -217,7 +218,6 @@ def reset_password(request):
 
 
 @login_required(login_url='login')
-
 def my_orders(request):
     orders = Order.objects.filter(user_id=request.user.id, is_ordered=True).order_by('-created_at')
     context = {'orders': orders}
@@ -225,7 +225,6 @@ def my_orders(request):
 
 
 @login_required(login_url='login')
-
 def edit_profile(request):
     user_profile = get_object_or_404(UserProfile, user=request.user)
 

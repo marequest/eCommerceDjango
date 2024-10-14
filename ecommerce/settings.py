@@ -106,23 +106,7 @@ else:
             'NAME': BASE_DIR / 'db.sqlite3',
         }
     }
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': config('DB_NAME'),
-#         'USER': config('DB_USER'),
-#         'PASSWORD': config('DB_PASSWORD'),
-#         'HOST': config('DB_HOST'),
-#         'PORT': config('DB_PORT'),
-#     }
-# }
-# DATABASES = {
-#     'default': dj_database_url.config(
-#         # Replace this value with your local database's connection string.
-#         default='postgresql://postgres:postgres@localhost:5432/mysite',
-#         conn_max_age=600
-#     )
-# }
+
 
 
 # Password validation
@@ -159,18 +143,13 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 # STATIC_ROOT = BASE_DIR / 'ecommerce/static'
-# STATICFILES_DIRS = [
-#     'ecommerce/static',
-# ]
+STATICFILES_DIRS = [BASE_DIR / 'ecommerce/static']
+
 
 MEDIA_URL = 'media/'
-
 MEDIA_ROOT = BASE_DIR / 'media'
 
 
-# STATIC_URL = 'static/'
-
-STATICFILES_DIRS = [BASE_DIR / 'static']
 
 # if not DEBUG:
 #     # Tell Django to copy static assets into a path called `staticfiles` (this is specific to Render)
@@ -200,12 +179,8 @@ AWS_S3_FILE_OVERWRITE = False
 STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
 
-# Set static and media file URLs
 # MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/'
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-
-# MEDIA_ROOT = BASE_DIR / 'media'
-
 
 
 MESSAGE_TAGS = {

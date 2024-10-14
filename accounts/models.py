@@ -89,3 +89,7 @@ class UserProfile(models.Model):
     def full_address(self):
         return f'{self.address_line_1} {self.address_line_2}'
 
+    def save(self, *args, **kwargs):
+        if not self.profile_picture:
+            self.profile_picture = 'images/profile.jpg'  # The path to your default image
+        super(UserProfile, self).save(*args, **kwargs)
