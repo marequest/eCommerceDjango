@@ -141,3 +141,9 @@ label:hover ~ input:checked ~ label /* highlight previous selected stars */ { co
 .size-box:hover {
     border-color: #007bff; /* Hover effect to highlight selection */
 }
+
+.spinner-border {
+    width: 4rem;  /* Double the default size (which is 2rem) */
+    height: 4rem; /* Double the default size (which is 2rem) */
+    border-width: 0.4em; /* Adjust the thickness of the spinner */
+}

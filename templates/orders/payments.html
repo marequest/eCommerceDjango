@@ -7,6 +7,14 @@
     <section class="section-content padding-y bg">
         <div class="container">
 
+            {#         SPINNER#}
+            <div id="loading-spinner"
+                 style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 1000;">
+                <div class="spinner-border" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+
             <!-- ============================ COMPONENT 1 ================================= -->
             <h4 class="text-center" style="margin-bottom: 40px">Review Your Order and Make Payment</h4>
 
@@ -130,28 +138,36 @@
 
     <script>
 
-function getCookie(name) {
-    let cookieValue = null;
-    if (document.cookie && document.cookie !== '') {
-        const cookies = document.cookie.split(';');
-        for (let i = 0; i < cookies.length; i++) {
-            const cookie = cookies[i].trim();
-            if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                break;
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
             }
+            return cookieValue;
         }
-    }
-    return cookieValue;
-}
 
-const csrftoken = getCookie('csrftoken');
+        const csrftoken = getCookie('csrftoken');
 
         var amount_to_pay = "{{ grand_total|floatformat:2 }}"
         var url = "{% url 'payments' %}"
         var orderID = "{{ order.order_number }}"
         var payment_method = 'PayPal'
         var redirect_url = "{% url 'order_complete' %}"
+
+        function showSpinner() {
+            document.getElementById('loading-spinner').style.display = 'block';
+        }
+
+        function hideSpinner() {
+            document.getElementById('loading-spinner').style.display = 'none';
+        }
 
         // Render the PayPal button into #paypal-button-container
         paypal.Buttons({
@@ -174,6 +190,7 @@ const csrftoken = getCookie('csrftoken');
                     sendData();
 
                     function sendData() {
+                        showSpinner(); // Show spinner before sending data
                         fetch(url, {
                             method: "POST",
                             headers: {
@@ -187,14 +204,19 @@ const csrftoken = getCookie('csrftoken');
                                 status: details.status
                             })
                         })
-                        .then((response) => response.json())
-                        .then((data) => {
-                            console.log("Success, Transaction Completed: ");
-                            console.log(data);
-                            
-                            {#window.location.href = redirect_url + "?order_number={{ data.order_number }}&payment_id={{ data.transaction_id }}"#}
-                            window.location.href = redirect_url + '?order_number=' + data.order_number + '&payment_id=' + data.transaction_id
-                        })
+                            .then((response) => response.json())
+                            .then((data) => {
+                                console.log("Success, Transaction Completed: ");
+                                console.log(data);
+                                hideSpinner(); // Hide spinner after getting a response
+
+                                {#window.location.href = redirect_url + "?order_number={{ data.order_number }}&payment_id={{ data.transaction_id }}"#}
+                                window.location.href = redirect_url + '?order_number=' + data.order_number + '&payment_id=' + data.transaction_id
+                            })
+                            .catch((error) => {
+                                console.error('Error:', error);
+                                hideSpinner(); // Hide spinner even if there’s an error
+                            });
                     }
                 })
             }
