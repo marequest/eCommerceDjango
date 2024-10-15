@@ -17,6 +17,9 @@ from carts.views import _cart_id
 from orders.models import Order, OrderProduct
 
 import traceback
+import logging
+
+logger = logging.getLogger('django')
 
 
 def register(request):
@@ -46,7 +49,6 @@ def register(request):
                 current_site = request.get_host()
                 # current_site = get_current_site(request)
                 mail_subject = 'Activate Your Account.'
-                messages.error(request, f'domains: {current_site}!')
                 message = render_to_string('accounts/account_verification_email.html', {
                     'user': user,
                     'domain': current_site,
@@ -57,9 +59,12 @@ def register(request):
                 send_email = EmailMessage(mail_subject, message, to=[to_email])
                 send_email.send()
             except Exception as e:
+                logger.error("current_site: %s", current_site)
+                logger.error("Error sending email: %s", str(e))
+                logger.error(traceback.format_exc())  # Log full stack trace for debugging
                 print(traceback.format_exc())
+            messages.success(request, 'We have sent you a verification link to your email.')
 
-            # messages.success(request, 'We have sent you a verification link to your email.')
             return redirect('/accounts/login/?command=verification&email=' + email)
     else:
         form = RegistrationForm()
@@ -69,6 +74,26 @@ def register(request):
 
 
 def login(request):
+    if request.GET.get('command') == 'verification':
+        email = request.GET.get('email')
+        try:
+            user = Account.objects.get(email=email)
+        except Account.DoesNotExist:
+            user = None
+
+        # If the user exists, prepare the context for the email template
+        if user:
+            context = {
+                'user': user,
+                'domain': request.get_host(),
+                'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+                'token': default_token_generator.make_token(user),
+            }
+            return render(request, 'accounts/login.html', {
+                'email_template_content': render_to_string('accounts/account_verification_email_temporary.html', context),
+                'email': email,
+            })
+
     if request.method == 'POST':
         email = request.POST['email']
         password = request.POST['password']

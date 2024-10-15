@@ -1,0 +1,19 @@
+{% autoescape off %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+    Hi {{ user.first_name }},
+    <br><br>
+    Google sometimes blocks our email traffic to Render site, so if you didn't receive email use the link below to activate your account:
+    <br>
+    <br>
+    <a href="http://{{ domain }}{% url 'activate' uidb64=uid token=token %}">
+        Activate your account
+    </a>
+    
+</body>
+</html>
+{% endautoescape %}
