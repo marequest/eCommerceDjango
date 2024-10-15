@@ -39,17 +39,18 @@
 			</button>
 			<div class="dropdown-menu">
             		<a class="dropdown-item" href="{% url 'store' %}">All Products</a>
+                <div class="dropdown-divider"></div>
                 {% for category in links %}
-				    <a class="dropdown-item" href="{{ category.get_url }}">{{ category.name }}</a>
+				    <a class="dropdown-item" href="{{ category.get_url }}">{{ category.name | capfirst }}</a>
                 {% endfor %}
 			</div>
 		</div>  <!-- category-wrap.// -->
 	</div> <!-- col.// -->
-	<a href="{% url 'store' %}" class="btn btn-outline-primary">Store</a>
+	<a href="{% url 'store' %}" class="btn btn-outline-primary">All Products</a>
 	<div class="col-lg  col-md-6 col-sm-12 col">
 		<form action="{% url 'search' %}" class="search" method="GET">
 			<div class="input-group w-100">
-			    <input type="text" class="form-control" style="width:60%;" placeholder="Search" name="keyword">
+			    <input type="text" class="form-control" style="width:60%;" placeholder="Search Store" name="keyword">
 
 			    <div class="input-group-append">
 			      <button class="btn btn-primary" type="submit">
@@ -71,7 +72,7 @@
 					</div>
                     {% else %}
                     <div class="widget-header">
-						<small class="title text-muted">Welcome {{ user.first_name }}!</small>
+						<small class="title text-muted">Welcome <b>{{ user.first_name }}</b>!</small>
 						<div>
 							<a href="{% url 'dashboard' %}">Dashboard</a> <span class="dark-transp"> | </span>
 							<a href="{% url 'logout' %}"> Logout</a>

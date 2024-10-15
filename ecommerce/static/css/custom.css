@@ -147,3 +147,6 @@ label:hover ~ input:checked ~ label /* highlight previous selected stars */ { co
     height: 4rem; /* Double the default size (which is 2rem) */
     border-width: 0.4em; /* Adjust the thickness of the spinner */
 }
+.banner-img {
+    height: 300px;  /* Set the image height to 300px */
+}
