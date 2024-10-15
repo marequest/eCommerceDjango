@@ -1,5 +1,7 @@
 import json
 from datetime import datetime
+
+from django.contrib import messages
 from django.core.mail import EmailMessage
 
 from django.http import HttpResponse, JsonResponse
@@ -11,6 +13,10 @@ from carts.models import CartItem
 from orders.forms import OrderForm
 from orders.models import Order, Payment, OrderProduct
 from store.models import Product
+
+import traceback
+import logging
+logger = logging.getLogger('django')
 
 
 # Create your views here.
@@ -122,15 +128,22 @@ def payments(request):
     CartItem.objects.filter(user=request.user).delete()
 
     # Send email to customer
-    mail_subject = 'Thank you for shopping with us.'
-    message = render_to_string('orders/order_received_email.html', {
-        'user': request.user,
-        'order': order,
-    })
-    to_email = request.user.email
-    send_email = EmailMessage(mail_subject, message, to=[to_email])
-    send_email.send()
+    try:
+        mail_subject = 'Thank you for shopping with us.'
+        message = render_to_string('orders/order_received_email.html', {
+            'user': request.user,
+            'order': order,
+        })
+        to_email = request.user.email
+        send_email = EmailMessage(mail_subject, message, to=[to_email])
+        send_email.send()
+    except Exception as e:
+        logger.error("Error sending email: %s", str(e))
+        logger.error(traceback.format_exc())  # Log full stack trace for debugging
+        print(traceback.format_exc())
 
+
+    messages.success(request, 'Thank you for shopping with us!')
     # Send order number and transaction id back to onApprove
     data = {
         'order_number': order.order_number,
