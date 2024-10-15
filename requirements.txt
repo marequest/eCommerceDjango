@@ -1,5 +1,4 @@
 asgiref==3.7.2
-backports.zoneinfo;python_version<"3.9"
 boto3==1.33.13
 botocore==1.33.13
 Brotli==1.1.0
@@ -10,6 +9,7 @@ dj-database-url==2.2.0
 Django==3.2.25
 django-admin-honeypot==1.1.0
 django-admin-thumbnails==0.2.9
+django-anymail==11.1
 django-cors-headers==4.1.0
 django-session-timeout==0.1.0
 django-storages==1.14.4
