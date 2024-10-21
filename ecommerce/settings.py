@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'carts',
     'orders',
     'admin_honeypot',
+    'portfolio',
 ]
 
 MIDDLEWARE = [
@@ -178,16 +179,12 @@ AWS_S3_FILE_OVERWRITE = False
 
 STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/static/'
 # if not DEBUG:
-#     STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-# if not DEBUG:
 STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 # else:
 #     STATIC_ROOT = BASE_DIR / 'static'
 #
 
 MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/'
-# if not DEBUG:
-#     DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 # if not DEBUG:
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
