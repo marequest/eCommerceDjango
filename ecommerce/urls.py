@@ -21,6 +21,8 @@ from django.urls import path, include
 import portfolio.views
 from . import views, settings
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from portfolio import views as portfolio_views
+
 
 urlpatterns = [
     path('admin/', include('admin_honeypot.urls', namespace='admin_honeypot')),
@@ -30,7 +32,7 @@ urlpatterns = [
     path('cart/', include('carts.urls')),
     path('accounts/', include('accounts.urls')),
     path('orders/', include('orders.urls')),
-    path('portfolio/', portfolio.views.portfolio, name='portfolio'),
+    path('portfolio/', portfolio_views.portfolio_page, name='portfolio_page'),
 ]
 
 if settings.DEBUG:
