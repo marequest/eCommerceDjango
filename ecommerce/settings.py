@@ -97,6 +97,8 @@ AUTH_USER_MODEL = 'accounts.Account'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
+# TODO Kada Menjas local i live, komenatrisi/odkomentarisi bazu i dole static/media file
+
 # if DEBUG:
 # DATABASES = {
 #     'default': {
