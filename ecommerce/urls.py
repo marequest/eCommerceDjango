@@ -17,6 +17,8 @@ Including another URLconf
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
+
+import portfolio.views
 from . import views, settings
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
@@ -28,7 +30,7 @@ urlpatterns = [
     path('cart/', include('carts.urls')),
     path('accounts/', include('accounts.urls')),
     path('orders/', include('orders.urls')),
-    path('portfolio/', include('portfolio.urls')),
+    path('portfolio/', portfolio.views.portfolio, name='portfolio'),
 ]
 
 if settings.DEBUG:
