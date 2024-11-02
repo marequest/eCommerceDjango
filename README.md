@@ -15,6 +15,7 @@
 - Email smtp
 - __PayPal Sandbox integration__
 
+
 Guide to test app, you can add items to Cart, Register, Sign in and go to Checkout, if you have PayPal sandbox account you can buy items in cart and get Order Receipts.
 
 

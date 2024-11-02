@@ -1,7 +1,11 @@
 {% load static %}
 <div class="w-100 d-flex justify-content-end bg-success" style="padding: 0px 0;">
-    <a href="{% url 'portfolio_page' %}" class="btn btn-outline-light bg-success" style="margin: 5px; border-color: white; color: white;">Visit My Portfolio</a>
+    <a href="{% url 'portfolio_page' %}" class="btn btn-outline-light bg-success" style="margin: 5px 10px 5px 5px;padding: 8px 15px 8px 15px; border-color: white; color: white;">
+         <i class="fas fa-folder-open" style="margin-right: 8px;"></i>
+        Visit My Portfolio
+    </a>
 </div>
+
 <header class="section-header">
 <nav class="navbar p-md-0 navbar-expand-sm navbar-light border-bottom">
 <div class="container">
@@ -29,9 +33,11 @@
 	<div class="container">
 <div class="row align-items-center">
 	<div class="col-lg-2 col-md-3 col-6">
-		<a href="{% url 'home' %}" class="brand-wrap">
-			<img class="logo" src="{% static './images/logo1.jpg' %}">
-		</a> <!-- brand-wrap.// -->
+<a href="{% url 'home' %}" class="brand-wrap d-flex align-items-center text-decoration-none">
+    <img class="logo" src="{% static './images/logo1.jpg' %}" style="height: 40px;">
+        <h5 class="mb-0 me-2 text-dark">Ecommerce</h5>
+</a> <!-- brand-wrap.// -->
+
 	</div>
 	<div class="col-lg col-sm col-md col-6 flex-grow-0">
 		<div class="category-wrap dropdown d-inline-block float-right">

@@ -1,130 +1,28 @@
 {% load static %}
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Marko Jovičić Resume</title>
-    <script src="{% static 'js/bootstrap.bundle.min.js' %}" type="text/javascript"></script>
-    <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet" type="text/css"/>
+    <title>Resume</title>
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        object {
+            width: 100%;
+            height: 100vh;
+            border: none;
+        }
+    </style>
 </head>
 <body>
-
-<div class="container mt-5">
-    <div class="row mb-4 align-items-center" style="background-color: #f8f9fa; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
-        <div class="col-md-3 text-center">
-            <img src="{% static 'images/1629587297712.jpg' %}" alt="Profile Picture" class="img-fluid"
-                 style="max-width: 200px; height: 200px; object-fit: cover; border-radius: 8px;">
-        </div>
-        <div class="col-md-9">
-            <h1 class="mb-1">Marko Jovičić</h1>
-            <p class="mb-1">Belgrade, Serbia</p>
-            <p class="mb-1">061 3089987 | <a href="mailto:markojovicic.rs@gmail.com">markojovicic.rs@gmail.com</a></p>
-            <p>
-                <a href="https://www.linkedin.com/in/markojovicic" target="_blank">LinkedIn</a> |
-                <a href="https://github.com/marequest" target="_blank">GitHub</a>
-            </p>
-        </div>
-    </div>
-
-    <hr>
-
-    <div class="row" style="background-color: #f8f9fa; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
-        <div class="col">
-            <h2>About Me</h2>
-            <p>
-                I like taking on challenges and working with others to find the best solutions.
-                I'm a good communicator, quick to adapt, and always open to learning and growing along the way.
-            </p>
-        </div>
-    </div>
-
-    <hr>
-
-    <div class="row" style="background-color: #f8f9fa; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
-        <div class="col">
-            <h2>Education</h2>
-            <h4>Računarski Fakultet - Union University (2020 - present)</h4>
-            <p>Graduate Computer Scientist</p>
-            <ul>
-                <li>Main courses: Software Engineering, Advanced Web Programming, Development of Mobile Applications.
-                </li>
-            </ul>
-
-            <h4>Gimnazija "Sveti Sava" (2016 - 2020)</h4>
-            <p>Računarski Smer</p>
-        </div>
-    </div>
-
-    <hr>
-
-    <div class="row" style="background-color: #f8f9fa; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
-        <div class="col">
-            <h2>Relevant Experience</h2>
-
-            <h4>Django - Ecommerce Website (Oct 2024 - Present)</h4>
-            <p><a href="https://ecommercedjango-1jrs.onrender.com/" target="_blank">Live Website</a> | <a
-                    href="https://github.com/marequest/eCommerceDjango" target="_blank">GitHub Repo</a></p>
-            <ul>
-                <li>Developed an eCommerce platform enabling users to browse products, manage their cart, and complete
-                    purchases via PayPal.
-                </li>
-                <li>Technologies used: Django, Render, AWS S3, PayPal, JS, HTML, CSS, PostgreSQL.</li>
-            </ul>
-
-            <h4>Frontend Developer - Banka 1 (Jan 2024 - July 2024)</h4>
-            <p><a href="https://github.com/RAF-SI-2023/Banka-1-Frontend" target="_blank">GitHub Repo</a></p>
-            <ul>
-                <li>Key contributor in a team of ~30, developed a microservices-oriented banking application.</li>
-                <li>Technologies used: Angular, Git, TypeScript, JavaScript, Scrum, Docker, Prow, HTML, CSS.</li>
-            </ul>
-
-            <h4>Android Developer - Gradjevinski Dnevnik (Dec 2023 - Feb 2024)</h4>
-            <p><a href="https://github.com/marequest/MyAndroidTemplate" target="_blank">GitHub Repo</a></p>
-            <ul>
-                <li>Researched and implemented modern architecture solutions for Android development.</li>
-                <li>Technologies used: Kotlin, Android Studio, Compose, Hilt, Retrofit, MVVM, DI, ViewModel, LiveData.
-                </li>
-            </ul>
-        </div>
-    </div>
-
-    <hr>
-
-    <div class="row" style="background-color: #f8f9fa; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
-        <div class="col">
-            <h2>Qualifications</h2>
-
-            <h4>Languages</h4>
-            <ul>
-                <li>Python, JavaScript, Java, Kotlin, SQL, HTML5, CSS3</li>
-                <li>Serbian (native), English (C2 Proficient)</li>
-            </ul>
-
-            <h4>Skills</h4>
-            <ul>
-                <li>Docker, IntelliJ, Git, Postman, AWS, Figma, Odoo</li>
-                <li>Django, Angular, Vue, Java Spring, NodeJS, Bootstrap</li>
-                <li>Android Studio, Room, Retrofit, Firebase, Koin, MVVM</li>
-            </ul>
-        </div>
-    </div>
-
-    <hr>
-
-    <div class="row" style="background-color: #f8f9fa; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
-        <div class="col">
-            <h2>Interests</h2>
-            <ul>
-                <li>Dancing, Traveling, Surfing, Snowboarding, Gaming</li>
-            </ul>
-        </div>
-    </div>
-
-</div>
-
-<script src="{% static 'js/jquery-2.0.0.min.js' %}" type="text/javascript"></script>
-
+    <object data="{% static 'Marko_Jovicic_Resume.pdf' %}" type="application/pdf">
+        Your browser does not support PDFs. Please download the PDF to view it:
+        <a href="{% static 'Marko_Jovicic_Resume.pdf' %}">Download PDF</a>
+    </object>
 </body>
 </html>
+//TODO Napravi Da je pocetna strana ne vodi ka loginu, onda vidi sta ces
