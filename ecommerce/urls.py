@@ -35,7 +35,7 @@ urlpatterns = [
     path('portfolio/', portfolio_views.portfolio_page, name='portfolio_page'),
 ]
 
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+# if settings.DEBUG:
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 # urlpatterns + staticfiles_urlpatterns()

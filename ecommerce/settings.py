@@ -100,16 +100,16 @@ AUTH_USER_MODEL = 'accounts.Account'
 # TODO Kada Menjas local i live, komenatrisi/odkomentarisi bazu i dole static/media file
 
 # if DEBUG:
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
-# else:
 # DATABASES = {
-#     'default': dj_database_url.parse(os.environ.get("DATABASE_URL"))
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
 # }
+# else:
+DATABASES = {
+    'default': dj_database_url.parse(os.environ.get("DATABASE_URL"))
+}
 
 
 
@@ -166,16 +166,13 @@ MEDIA_ROOT = BASE_DIR / 'media'
 # MEDIA_URL = '/media/'
 
 # AWS settings
-AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')  # Store in .env
-AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')  # Store in .env
-AWS_STORAGE_BUCKET_NAME = 'ecommerce-marko-bucket'
-# AWS_S3_REGION_NAME = 'us-east-2'  # e.g., 'us-east-1'
-AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
-AWS_S3_FILE_OVERWRITE = False
-# AWS_DEFAULT_ACL = None  # To prevent permission issues
-# AWS_S3_OBJECT_PARAMETERS = {
-#     'CacheControl': 'max-age=86400',
-# }
+# AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')  # Store in .env
+# AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')  # Store in .env
+# AWS_STORAGE_BUCKET_NAME = 'ecommerce-marko-bucket'
+#
+# AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
+# AWS_S3_FILE_OVERWRITE = False
+
 
 
 
