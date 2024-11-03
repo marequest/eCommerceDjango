@@ -100,16 +100,16 @@ AUTH_USER_MODEL = 'accounts.Account'
 # TODO Kada Menjas local i live, komenatrisi/odkomentarisi bazu i dole static/media file
 
 # if DEBUG:
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
-# else:
 # DATABASES = {
-#     'default': dj_database_url.parse(os.environ.get("DATABASE_URL"))
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
 # }
+# else:
+DATABASES = {
+    'default': dj_database_url.parse(os.environ.get("DATABASE_URL"))
+}
 
 
 
@@ -179,16 +179,16 @@ AWS_S3_FILE_OVERWRITE = False
 
 
 
-# STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/static/'
-# # if not DEBUG:
-# STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-# # else:
-# #     STATIC_ROOT = BASE_DIR / 'static'
-# #
+STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/static/'
+# if not DEBUG:
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+# else:
+#     STATIC_ROOT = BASE_DIR / 'static'
 #
-# MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/'
-# # if not DEBUG:
-# DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/'
+# if not DEBUG:
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
 
 MESSAGE_TAGS = {
