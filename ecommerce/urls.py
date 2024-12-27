@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include, re_path
 
 import portfolio.views
 from . import views, settings
@@ -27,12 +27,17 @@ from portfolio import views as portfolio_views
 urlpatterns = [
     path('admin/', include('admin_honeypot.urls', namespace='admin_honeypot')),
     path('adminsl/', admin.site.urls),
-    path('', views.home, name='home'),
-    path('store/', include('store.urls')),
-    path('cart/', include('carts.urls')),
-    path('accounts/', include('accounts.urls')),
-    path('orders/', include('orders.urls')),
+    # TODO #################### Vrati sve ovo
+    # path('', views.home, name='home'),
+    # path('store/', include('store.urls')),
+    # path('cart/', include('carts.urls')),
+    # path('accounts/', include('accounts.urls')),
+    # path('orders/', include('orders.urls')),
     path('portfolio/', portfolio_views.portfolio_page, name='portfolio_page'),
+]
+# Redirect all other URLs to the portfolio view
+urlpatterns += [
+    re_path(r'^.*$', portfolio_views.portfolio_page, name='redirect_to_portfolio'),
 ]
 
 # if settings.DEBUG:
