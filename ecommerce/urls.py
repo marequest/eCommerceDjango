@@ -34,7 +34,7 @@ urlpatterns = [
     # path('accounts/', include('accounts.urls')),
     # path('orders/', include('orders.urls')),
     path('portfolio/', portfolio_views.portfolio_page, name='portfolio_page'),
-]
+] + static(settings.STATIC_URL, document_root=settings.STATICFILES_DIRS[0])
 # Redirect all other URLs to the portfolio view
 urlpatterns += [
     re_path(r'^.*$', portfolio_views.portfolio_page, name='redirect_to_portfolio'),
